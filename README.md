@@ -4,12 +4,12 @@ lovelog
 Very simple log library for LÖVE games.
 
 # How to add into your game
-```
+```lua
 logger = require 'lovelog'
 ```
 
 # How to use it once you've added the library
-```
+```lua
 logger.setFile("savefile.txt") -- This sets the file being used
 
 
