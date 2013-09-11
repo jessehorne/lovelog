@@ -21,4 +21,4 @@ logger.read(1)                 -- Prints the first line of the file, if it exist
 ```
 
 # Suggestions
-Please make an 'issue', and submit it. You are also welcome to send your pull requests. :-)
+Please make an 'issue', and submit it. You are also welcome to submit your pull requests. :-)
