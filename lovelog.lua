@@ -1,36 +1,42 @@
 local lovelog = {}
 lovelog.saveFile = "log.txt"
+lovelog._buffer = {}
+
 function lovelog.setFile(name)
   lovelog.saveFile = name
 end
-function lovelog.log(str, m)
+
+function lovelog.clearBuffer()
+  lovelog._buffer = {}
+end
+
+function lovelog.log(str)
+  lovelog._buffer[#lovelog._buffer + 1] = str
+end
+
+function lovelog.save()
   local file = love.filesystem.newFile(lovelog.saveFile)
   file:open("w")
-  file:write(str)
+  for i,v in ipairs(lovelog._buffer) do 
+    file:write(v .. "\n")
+  end
   file:close()
 end
+
 function lovelog.read(mode) -- mode is "all" or the line number
-  contents = love.filesystem.read(lovelog.saveFile)
-  local text = {}
-  local allText = {}
-  local counter = 1
-  for i=1, #contents do
-    if string.sub(contents, i, i) == "\n" or i == #contents then
-      if i == #contents then table.insert(text, string.sub(contents, i, i)) end
-      table.insert(allText, table.concat(text))
-      text = {}
-    else
-      table.insert(text, string.sub(contents, i, i))
-    end
-  end
   if type(mode) == "string" then
-    if mode == "all" then print(table.concat(allText)) end
+    if mode == "all" then 
+      for i,v in ipairs(lovelog._buffer) do 
+        print(v)
+      end
+    end
   elseif type(mode) == "number" then
-    if allText[mode] ~= nil then
-      print(allText[mode])
+    if lovelog._buffer[mode] ~= nil then
+      print(lovelog._buffer[mode])
     else
       return nil
     end
   end
 end
+
 return lovelog
